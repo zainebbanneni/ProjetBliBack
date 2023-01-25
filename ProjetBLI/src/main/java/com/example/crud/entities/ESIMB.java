@@ -3,50 +3,55 @@ package com.example.crud.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ESIMB {
+public class ESIMB{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String Id_acte;
-	private String code_IMB;
-	private Date date_verification;
-	public String getId_acte() {
-		return Id_acte;
+	private String idacte;
+	private String codeIMB;
+	private String date_verification;
+	public String getIdacte() {
+		return idacte;
 	}
-	public void setId_acte(String id_acte) {
-		Id_acte = id_acte;
+	public void setIdacte(String idacte) {
+		this.idacte = idacte;
 	}
-	public String getCode_IMB() {
-		return code_IMB;
+	
+	
+	public String getCodeIMB() {
+		return codeIMB;
 	}
-	public void setCode_IMB(String code_IMB) {
-		this.code_IMB = code_IMB;
+	public void setCodeIMB(String codeIMB) {
+		this.codeIMB = codeIMB;
 	}
-	public Date getDate_verification() {
+	public String getDate_verification() {
 		return date_verification;
 	}
-	public void setDate_verification(Date date_verification) {
+	public void setDate_verification(String date_verification) {
 		this.date_verification = date_verification;
 	}
+	
 	public ESIMB() {
 		super();
 	}
-	public ESIMB(String id_acte, String code_IMB, Date date_verification) {
+	public ESIMB(String idacte, String codeIMB, String date_verification) {
 		super();
-		this.Id_acte = id_acte;
-		this.code_IMB = code_IMB;
+		this.idacte = idacte;
+		this.codeIMB = codeIMB;
 		this.date_verification = date_verification;
+	}
+	
+	
+	public ESIMB(String idacte, String codeIMB) {
+		super();
+		this.idacte = idacte;
+		this.codeIMB = codeIMB;
 	}
 	@Override
 	public String toString() {
-		return "ESIMB [Id_acte=" + Id_acte + ", code_IMB=" + code_IMB + ", date_verification=" + date_verification
-				+ "]";
+		return "ESIMB [idacte=" + idacte + ", codeIMB=" + codeIMB + ", date_verification=" + date_verification + "]";
 	}
-	
 	
 	
 
