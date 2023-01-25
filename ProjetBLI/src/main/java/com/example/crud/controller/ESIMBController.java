@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.entities.Acte_traitement;
 import com.example.crud.entities.ESIMB;
-import com.example.crud.entities.Fonction;
 import com.example.crud.repository.Acte_traitementRepository;
 import com.example.crud.repository.ESIMBRepository;
-import com.example.crud.repository.FonctionRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -33,13 +31,26 @@ public class ESIMBController {
 	ESIMBRepository ESIMBRepo;
 	@Autowired
 	Acte_traitementRepository actetraitementRepository;
-	@Autowired 
-	FonctionRepository fonctionRepository;
+	
 	
 	
 	@PostMapping("/add")
 	public String create(@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String codeIMB, @RequestParam String date_verification ) {
-		actetraitementRepository.save(new Acte_traitement (acte_traitement.getId_acte(), acte_traitement.getRef_tacheBPU(), acte_traitement.getType_prestation(), acte_traitement.getType_element(), acte_traitement.getQuantite(), acte_traitement.getDate_reception(), acte_traitement.getDate_livraison(), acte_traitement.getDate_validation(), acte_traitement.getAffectation(), acte_traitement.getDuree(), acte_traitement.getCommentaire(), acte_traitement.getMotif(), acte_traitement.getStatut_facturation(), acte_traitement.getDate_reprise(), acte_traitement.getReprise_facturable()));
+		actetraitementRepository.save(new Acte_traitement (acte_traitement.getIdactetrait(),
+				acte_traitement.getRef_tacheBPU(),
+				acte_traitement.getType_prestation(),
+				acte_traitement.getType_element(),
+				acte_traitement.getQuantite(),
+				acte_traitement.getDate_reception(),
+				acte_traitement.getDate_livraison(),
+				acte_traitement.getDate_validation(),
+				acte_traitement.getAffectation(),
+				acte_traitement.getDuree(),
+				acte_traitement.getCommentaire(),
+				acte_traitement.getMotif(),
+				acte_traitement.getStatut_facturation(),
+				acte_traitement.getDate_reprise(),
+				acte_traitement.getReprise_facturable()));
 		ESIMB esimb= new ESIMB(idacte, codeIMB, date_verification);
 		ESIMBRepo.save(esimb);
 		return ("ok");
@@ -63,28 +74,38 @@ public class ESIMBController {
 	}
 	
 
-	@PutMapping("/tickets/{idacte}")
+	@PutMapping("/tick")
 	public ResponseEntity<ESIMB> update (@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String date_verification ) {
-		Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(idacte);
-		Optional<Acte_traitement> actetrait = actetraitementRepository.findById_Acte(acte_traitement.getId_acte());
+		System.out.println("Hi!!");
+		Optional<ESIMB> esimbData = ESIMBRepo.findByIdacte(idacte);
+		System.out.println(esimbData.toString());
+		Optional<Acte_traitement> actetrait = actetraitementRepository.findByidactetrait(acte_traitement.getIdactetrait());
+		System.out.println(actetrait.toString());
+		//System.out.println("idacte"+ idacte);
+		//System.out.println("idactetrait"+ acte_traitement.getIdactetrait());
+
 		
+
 		if (actetrait.isPresent()) {
 			Acte_traitement _actetrait = actetrait.get();
-					_actetrait.setAffectation(acte_traitement.getAffectation());
-					_actetrait.setCommentaire(acte_traitement.getCommentaire());
-					_actetrait.setDate_livraison(acte_traitement.getDate_livraison());
-					_actetrait.setDate_reception(acte_traitement.getDate_reception());
-					_actetrait.setDate_reprise(acte_traitement.getDate_reprise());
-					_actetrait.setDate_validation(acte_traitement.getDate_validation());
-					_actetrait.setDuree(acte_traitement.getDuree());
-					_actetrait.setMotif(acte_traitement.getMotif());
-					_actetrait.setQuantite(acte_traitement.getQuantite());
-					_actetrait.setReprise_facturable(acte_traitement.getReprise_facturable());
-					_actetrait.setStatut_facturation(acte_traitement.getStatut_facturation());
-					_actetrait.setType_element(acte_traitement.getType_element());
-					_actetrait.setType_prestation(acte_traitement.getType_prestation());
-					
+			_actetrait.setType_prestation(acte_traitement.getType_prestation());
+			_actetrait.setType_element(acte_traitement.getType_element());
+			_actetrait.setQuantite(acte_traitement.getQuantite());
+			_actetrait.setDate_reception(acte_traitement.getDate_reception());
+			_actetrait.setDate_livraison(acte_traitement.getDate_livraison());
+			_actetrait.setDate_validation(acte_traitement.getDate_validation());
+			_actetrait.setAffectation(acte_traitement.getAffectation());
+			_actetrait.setDuree(acte_traitement.getDuree());
+			_actetrait.setCommentaire(acte_traitement.getCommentaire());
+			_actetrait.setMotif(acte_traitement.getMotif());
+			_actetrait.setStatut_facturation(acte_traitement.getStatut_facturation());
+			_actetrait.setDate_reprise(acte_traitement.getDate_reprise());
+			_actetrait.setReprise_facturable(acte_traitement.getReprise_facturable());
+			//System.out.println("dhgdd!!");
+			
 		}
+	
+		
 
 		if (esimbData.isPresent()) {
 			ESIMB _esimb = esimbData.get();

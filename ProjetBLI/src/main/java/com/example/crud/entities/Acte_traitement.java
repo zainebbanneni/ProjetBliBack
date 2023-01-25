@@ -14,9 +14,8 @@ import javax.persistence.InheritanceType;
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Acte_traitement {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String Id_acte;
-	private String Ref_tacheBPU;
+	private String idactetrait;
+	private String ref_tacheBPU;
 	private String type_prestation;
 	private String type_element;
 	private int quantite;
@@ -30,17 +29,18 @@ public class Acte_traitement {
 	private String statut_facturation;
 	private String date_reprise;
 	private String reprise_facturable;
-	public String getId_acte() {
-		return Id_acte;
+	
+	public String getIdactetrait() {
+		return idactetrait;
 	}
-	public void setId_acte(String id_acte) {
-		Id_acte = id_acte;
+	public void setIdactetrait(String idactetrait) {
+		this.idactetrait = idactetrait;
 	}
 	public String getRef_tacheBPU() {
-		return Ref_tacheBPU;
+		return ref_tacheBPU;
 	}
 	public void setRef_tacheBPU(String ref_tacheBPU) {
-		Ref_tacheBPU = ref_tacheBPU;
+		this.ref_tacheBPU = ref_tacheBPU;
 	}
 	public String getType_prestation() {
 		return type_prestation;
@@ -127,8 +127,8 @@ public class Acte_traitement {
 			String date_reception, String date_livraison, String date_validation, String affectation, int duree,
 			String commentaire, String motif, String statut_facturation, String date_reprise, String reprise_facturable) {
 		super();
-		this.Id_acte = id_acte;
-		this.Ref_tacheBPU = ref_tacheBPU;
+		this.idactetrait = id_acte;
+		this.ref_tacheBPU = ref_tacheBPU;
 		this.type_prestation = type_prestation;
 		this.type_element = type_element;
 		this.quantite = quantite;
@@ -147,7 +147,7 @@ public class Acte_traitement {
 			String date_livraison, String date_validation, String affectation, int duree, String commentaire, String motif,
 			String statut_facturation, String date_reprise, String reprise_facturable) {
 		super();
-		this.Id_acte = id_acte;
+		this.idactetrait = id_acte;
 		this.type_prestation = type_prestation;
 		this.type_element = type_element;
 		this.quantite = quantite;
@@ -166,14 +166,14 @@ public class Acte_traitement {
 	
 	public Acte_traitement(String id_acte, String ref_tacheBPU, String type_prestation, String type_element) {
 		super();
-		Id_acte = id_acte;
-		Ref_tacheBPU = ref_tacheBPU;
+		this.idactetrait = id_acte;
+		this.ref_tacheBPU = ref_tacheBPU;
 		this.type_prestation = type_prestation;
 		this.type_element = type_element;
 	}
 	@Override
 	public String toString() {
-		return "Acte_traitement [Id_acte=" + Id_acte + ", Ref_tacheBPU=" + Ref_tacheBPU + ", type_prestation="
+		return "Acte_traitement [Id_acte=" + idactetrait + ", Ref_tacheBPU=" + ref_tacheBPU + ", type_prestation="
 				+ type_prestation + ", type_element=" + type_element + ", quantite=" + quantite + ", date_reception="
 				+ date_reception + ", date_livraison=" + date_livraison + ", date_validation=" + date_validation
 				+ ", affectation=" + affectation + ", duree=" + duree + ", commentaire=" + commentaire + ", motif="
