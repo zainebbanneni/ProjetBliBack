@@ -38,8 +38,8 @@ public class ESIMBController {
 	
 	
 	@PostMapping("/add")
-	public String create(@RequestBody Fonction fonction, @RequestParam String idacte, @RequestParam String codeIMB, @RequestParam String date_verification ) {
-		fonctionRepository.save(new Fonction(fonction.getId_fonction(), fonction.getDescription()) );
+	public String create(@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String codeIMB, @RequestParam String date_verification ) {
+		actetraitementRepository.save(new Acte_traitement (acte_traitement.getId_acte(), acte_traitement.getRef_tacheBPU(), acte_traitement.getType_prestation(), acte_traitement.getType_element(), acte_traitement.getQuantite(), acte_traitement.getDate_reception(), acte_traitement.getDate_livraison(), acte_traitement.getDate_validation(), acte_traitement.getAffectation(), acte_traitement.getDuree(), acte_traitement.getCommentaire(), acte_traitement.getMotif(), acte_traitement.getStatut_facturation(), acte_traitement.getDate_reprise(), acte_traitement.getReprise_facturable()));
 		ESIMB esimb= new ESIMB(idacte, codeIMB, date_verification);
 		ESIMBRepo.save(esimb);
 		return ("ok");
@@ -64,18 +64,36 @@ public class ESIMBController {
 	
 
 	@PutMapping("/tickets/{idacte}")
-	public ResponseEntity<ESIMB> update (@PathVariable String idacte, @RequestBody ESIMB esimb) {
+	public ResponseEntity<ESIMB> update (@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String date_verification ) {
 		Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(idacte);
+		Optional<Acte_traitement> actetrait = actetraitementRepository.findById_Acte(acte_traitement.getId_acte());
+		
+		if (actetrait.isPresent()) {
+			Acte_traitement _actetrait = actetrait.get();
+					_actetrait.setAffectation(acte_traitement.getAffectation());
+					_actetrait.setCommentaire(acte_traitement.getCommentaire());
+					_actetrait.setDate_livraison(acte_traitement.getDate_livraison());
+					_actetrait.setDate_reception(acte_traitement.getDate_reception());
+					_actetrait.setDate_reprise(acte_traitement.getDate_reprise());
+					_actetrait.setDate_validation(acte_traitement.getDate_validation());
+					_actetrait.setDuree(acte_traitement.getDuree());
+					_actetrait.setMotif(acte_traitement.getMotif());
+					_actetrait.setQuantite(acte_traitement.getQuantite());
+					_actetrait.setReprise_facturable(acte_traitement.getReprise_facturable());
+					_actetrait.setStatut_facturation(acte_traitement.getStatut_facturation());
+					_actetrait.setType_element(acte_traitement.getType_element());
+					_actetrait.setType_prestation(acte_traitement.getType_prestation());
+					
+		}
 
 		if (esimbData.isPresent()) {
 			ESIMB _esimb = esimbData.get();
-			_esimb.setCodeIMB(esimb.getCodeIMB());
-			_esimb.setIdacte(esimb.getIdacte());
-			_esimb.setDate_verification(esimb.getDate_verification());
+			_esimb.setDate_verification(date_verification);
 			return new ResponseEntity<>(ESIMBRepo.save(_esimb), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 	}
 
 	/*@PostMapping("/add")

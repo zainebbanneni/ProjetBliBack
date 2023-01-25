@@ -12,7 +12,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Acte_traitement {
+public class Acte_traitement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String Id_acte;
