@@ -9,11 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Indexed;
 
+@Indexed
 @Entity
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Acte_traitement {
 	@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String idactetrait;
 	private String ref_tacheBPU;
 	private String type_prestation;
