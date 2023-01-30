@@ -18,8 +18,8 @@ import org.springframework.stereotype.Indexed;
 public class Acte_traitement {
 	@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-	 @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	 //@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String idactetrait;
 	private String ref_tacheBPU;
 	private String type_prestation;

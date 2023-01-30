@@ -69,6 +69,22 @@ public class ESIMBController {
 	public List<ESIMB> getAll(){
 		return ESIMBRepo.findAll();
 	}
+	
+	@GetMapping("/tickets/actes")
+	public List<Acte_traitement> getAllActes(){
+		return actetraitementRepository.findAll();
+	}
+	
+	@GetMapping("/tickets/actes/{id_acte}")
+	public ResponseEntity<Acte_traitement> getESIMBByIdActes(@PathVariable("id_acte") String idactetrait) {
+		Optional<Acte_traitement> esimbData = actetraitementRepository.findByidactetrait(idactetrait);
+
+		if (esimbData.isPresent()) {
+			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 
 	@GetMapping("/tickets/idacte/{id_acte}")

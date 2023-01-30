@@ -14,8 +14,8 @@ import org.springframework.stereotype.Indexed;
 @Entity
 public class ESIMB{
 	@Id
-	 @GeneratedValue(generator="system-uuid")
-		@GenericGenerator(name="system-uuid", strategy = "uuid")
+	 //@GeneratedValue(generator="system-uuid")
+		//@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String idacte;
 	private String codeIMB;
 	private String date_verification;
