@@ -178,30 +178,6 @@ public class ESIMBController {
 	}
 }
 
-	/*@PostMapping("/add")
-    public ResponseEntity<ESIMB >add(@RequestBody ESIMB esimb) {
-    
-    	esimbService.add(esimb);
-        ResponseEntity<ESIMB> Esimb= new ResponseEntity<ESIMB>(esimb,HttpStatus.OK);
-        return Esimb;
-    }
-	@GetMapping("/all")
-    public ResponseEntity<List<ESIMB>> getAll () {
-        List<ESIMB> tickets = esimbService.findAll();
-        return new ResponseEntity<>(tickets, HttpStatus.OK);
-    }
-
-    @GetMapping("/find/{id_acte}")
-    public ResponseEntity<ESIMB> getByIdActe (@PathVariable("Id_acte") String Id_acte) {
-    	ESIMB Esimb = esimbService.findById_Acte(Id_acte);
-        return new ResponseEntity<>(Esimb, HttpStatus.OK);
-    }
-    
-    @GetMapping("/find/{code_IMB}")
-    public ResponseEntity<ESIMB> getByCodeIMB (@PathVariable("code") String code_IMB) {
-    	ESIMB Esimb = esimbService.findByCode_IMB(code_IMB);
-        return new ResponseEntity<>(Esimb, HttpStatus.OK);
-    }*/
 	
 	
 

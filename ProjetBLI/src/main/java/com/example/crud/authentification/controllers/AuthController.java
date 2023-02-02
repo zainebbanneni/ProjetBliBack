@@ -31,6 +31,8 @@ import com.example.crud.authentification.repository.RoleRepository;
 import com.example.crud.authentification.repository.UserRepository;
 import com.example.crud.authentification.security.jwt.JwtUtils;
 import com.example.crud.authentification.security.services.UserDetailsImpl;
+import com.example.crud.entities.Collaborateur;
+import com.example.crud.repository.CollaborateurRepository;
 
 
 
@@ -46,6 +48,9 @@ public class AuthController {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	CollaborateurRepository collaborateurRepository;
+	
 	@Autowired
 	RoleRepository roleRepository;
 
@@ -94,6 +99,7 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(), 
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
+		Collaborateur collaborateur= new Collaborateur(signUpRequest.getUsername(), signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getId_equipe());
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -139,8 +145,12 @@ public class AuthController {
 
 		user.setRoles(roles);
 		userRepository.save(user);
+		collaborateurRepository.save(collaborateur);
+		
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+	
+	
 
 }
