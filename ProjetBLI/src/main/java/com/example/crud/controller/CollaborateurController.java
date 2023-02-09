@@ -21,5 +21,11 @@ public class CollaborateurController {
 		return collaborateurRepository.findByCUID(cuid);
 	}
 	
+	@GetMapping("/getAllCollaborateursbypilote/{cuid}")
+	public List<Collaborateur> getAllCollaborateursbypilote(@PathVariable String cuid){
+		Collaborateur pilote = collaborateurRepository.findByCUID(cuid);
+		return collaborateurRepository.findByidequipe(pilote.getIdequipe());
+	}
+	
 
 }

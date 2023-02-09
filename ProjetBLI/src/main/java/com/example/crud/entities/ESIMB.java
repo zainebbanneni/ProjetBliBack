@@ -12,19 +12,11 @@ import org.springframework.stereotype.Indexed;
 
 @Indexed
 @Entity
-public class ESIMB{
-	@Id
-	 //@GeneratedValue(generator="system-uuid")
-		//@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String idacte;
+public class ESIMB extends Acte_traitement{
+
 	private String codeIMB;
-	private String date_verification;
-	public String getIdacte() {
-		return idacte;
-	}
-	public void setIdacte(String idacte) {
-		this.idacte = idacte;
-	}
+	private String dateVerification;
+
 	
 	
 	public String getCodeIMB() {
@@ -33,32 +25,26 @@ public class ESIMB{
 	public void setCodeIMB(String codeIMB) {
 		this.codeIMB = codeIMB;
 	}
-	public String getDate_verification() {
-		return date_verification;
+	public String getDateVerification() {
+		return dateVerification;
 	}
-	public void setDate_verification(String date_verification) {
-		this.date_verification = date_verification;
+	public void setDateVerification(String dateVerification) {
+		this.dateVerification = dateVerification;
 	}
 	
 	public ESIMB() {
 		super();
 	}
-	public ESIMB(String idacte, String codeIMB, String date_verification) {
+	public ESIMB( String codeIMB, String dateVerification) {
 		super();
-		this.idacte = idacte;
 		this.codeIMB = codeIMB;
-		this.date_verification = date_verification;
+		this.dateVerification = dateVerification;
 	}
 	
-	
-	public ESIMB(String idacte, String codeIMB) {
-		super();
-		this.idacte = idacte;
-		this.codeIMB = codeIMB;
-	}
+
 	@Override
 	public String toString() {
-		return "ESIMB [idacte=" + idacte + ", codeIMB=" + codeIMB + ", date_verification=" + date_verification + "]";
+		return "ESIMB [ codeIMB=" + codeIMB + ", date_verification=" + dateVerification + "]";
 	}
 	
 	

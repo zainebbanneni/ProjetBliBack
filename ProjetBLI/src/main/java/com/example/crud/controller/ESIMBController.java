@@ -1,9 +1,10 @@
 package com.example.crud.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.entities.Acte_traitement;
 import com.example.crud.entities.ESIMB;
+import com.example.crud.entities.Graphic;
+import com.example.crud.exception.ResourceNotFoundException;
 import com.example.crud.repository.Acte_traitementRepository;
 import com.example.crud.repository.ESIMBRepository;
 
@@ -34,7 +37,7 @@ public class ESIMBController {
 	
 	
 	
-	@PostMapping("/add")
+	/*@PostMapping("/add")
 	public String create(@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String codeIMB, @RequestParam String date_verification ) {
 		try{
 			actetraitementRepository.save(new Acte_traitement (acte_traitement.getIdactetrait(),
@@ -52,7 +55,7 @@ public class ESIMBController {
 				acte_traitement.getStatut_facturation(),
 				acte_traitement.getDate_reprise(),
 				acte_traitement.getReprise_facturable()));
-		ESIMB esimb= new ESIMB(idacte, codeIMB, date_verification);
+		ESIMB esimb= new ESIMB(codeIMB, date_verification);
 		//ESIMB esimb= new ESIMB("jghg", "jjh", "jhj");
 
 
@@ -63,21 +66,66 @@ public class ESIMBController {
 		catch(Exception e ) {
 			return "ko";
 		}
+	}*/
+	
+	@PostMapping("/esimbs")
+	public ESIMB create(@Valid @RequestBody ESIMB esimb) {
+		Acte_traitement actetrait= new Acte_traitement(esimb.getIdactetrait(), esimb.getDateVerification());
+        ESIMBRepo.save(esimb);
+		actetraitementRepository.save(actetrait);
+        return esimb;
+    }
+	
+	@GetMapping("/esimbs")
+	public ResponseEntity<List<ESIMB>> getAll(@RequestParam(required = false) String codeIMB) {
+		try {
+			List<ESIMB> esimbs = new ArrayList<ESIMB>();
+
+			if (codeIMB == null)
+				ESIMBRepo.findAll().forEach(esimbs::add);
+			else
+				ESIMBRepo.findBycodeIMBContaining(codeIMB).forEach(esimbs::add);
+
+			if (esimbs.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(esimbs, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
-	@GetMapping("/tickets")
-	public List<ESIMB> getAll(){
-		return ESIMBRepo.findAll();
-	}
+	//Get Esimb by id acte
+		@GetMapping("/getEsimbById/{idacteString}")
+		public List<ESIMB> getEsimbByIdActe(@PathVariable String idacteString){
+			return ESIMBRepo.findByidacteContaining(idacteString);
+		}
 	
-	@GetMapping("/tickets/actes")
-	public List<Acte_traitement> getAllActes(){
-		return actetraitementRepository.findAll();
-	}
+	//Get Esimb by affectation
+		@GetMapping("/getEsimbByAffectation/{affectationString}")
+		public List<ESIMB> getEsimbByAffectation(@PathVariable String affectationString){
+			return ESIMBRepo.findByaffectationContaining(affectationString);
+		}
+
+		//Get Esimb by Date de livraison
+		@GetMapping("/getEsimbByDL/{dateLivraison}")
+		public List<ESIMB> getEsimbByDateLivraison(@PathVariable String dateLivraison){
+			return ESIMBRepo.findBydateLivraison(dateLivraison);
+		}
+		
+		//Get Esimb by CodeIMB
+				@GetMapping("/getEsimbBycodeIMB/{codeIMB}")
+				public List<ESIMB> getEsimbBycodeIMB(@PathVariable String codeIMB){
+					return ESIMBRepo.findBycodeIMBContaining(codeIMB);
+				}
+
 	
-	@GetMapping("/tickets/actes/{id_acte}")
-	public ResponseEntity<Acte_traitement> getESIMBByIdActes(@PathVariable("id_acte") String idactetrait) {
-		Optional<Acte_traitement> esimbData = actetraitementRepository.findByidactetrait(idactetrait);
+	
+	
+	/*@GetMapping("/esimbs/actes/{id_acte}")
+	public ResponseEntity<ESIMB> getESIMBByIdActes(@PathVariable("id_acte") String idactetrait) {
+		Optional<ESIMB> esimbData = ESIMBRepo.findByidactetrait(idactetrait);
 
 		if (esimbData.isPresent()) {
 			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
@@ -85,39 +133,8 @@ public class ESIMBController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
-
-	@GetMapping("/tickets/idacte/{id_acte}")
-	public ResponseEntity<ESIMB> getESIMBByIdActe(@PathVariable("idacte") String idacte) {
-		Optional<ESIMB> esimbData = ESIMBRepo.findByIdacte(idacte);
-
-		if (esimbData.isPresent()) {
-			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@GetMapping("/tickets/codeIMB/{codeIMB}")
-	public ArrayList<ESIMB> getESIMBByCodeIMB(@PathVariable("codeIMB") String codeIMB) {
-		ESIMB es = new ESIMB("123", "12", "hh");
-		ESIMB es1 = new ESIMB("123", "12", "hhh");
-		ArrayList<ESIMB> a= new ArrayList<ESIMB>();
-		a.add(es);
-		a.add(es1);
-		return a;
-		/*Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(codeIMB);
-
-		if (esimbData.isPresent()) {
-			
-			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}*/
-	}
-	
-	@GetMapping("/tickets/Esimb")
-	public ResponseEntity<List<ESIMB>> getesimbbycodeIMB(@RequestParam String codeIMB) {
+	@GetMapping("/esimbs/Esimb")
+	public ResponseEntity<List<ESIMB>> getesimb(@RequestParam String codeIMB) {
 		try {
 			List<ESIMB> esimbs = new ArrayList<ESIMB>();
 			if (codeIMB == null)
@@ -132,10 +149,95 @@ public class ESIMBController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		 }
+
+
+	/*@GetMapping("/esimbs/idacte/{idacte}")
+	public ResponseEntity<ESIMB> getESIMBByIdActe(@PathVariable("idacte") String idacte) {
+		Optional<ESIMB> esimbData = ESIMBRepo.findByIdacte(idacte);
+
+		if (esimbData.isPresent()) {
+			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}*/
+	
+	@GetMapping("/esimbs/codeIMB/{codeIMB}")
+	public ResponseEntity<ESIMB> getESIMBBycodeIMB(@PathVariable("codeIMB") String codeIMB) {
+		Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(codeIMB);
+
+		if (esimbData.isPresent()) {
+			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	/*@GetMapping("/tickets/codeIMB/{codeIMB}")
+	public ArrayList<ESIMB> getESIMBByCodeIMB(@PathVariable("codeIMB") String codeIMB) {
+		ESIMB es = new ESIMB("123", "12", "hh");
+		ESIMB es1 = new ESIMB("123", "12", "hhh");
+		ArrayList<ESIMB> a= new ArrayList<ESIMB>();
+		a.add(es);
+		a.add(es1);
+		return a;
+		/*Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(codeIMB);
+
+		if (esimbData.isPresent()) {
+			
+			return new ResponseEntity<>(esimbData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}*/
+	
+	/*@PutMapping("/esimbs/{idactetrait}")
+	public ResponseEntity<ESIMB> updateEsimb(@PathVariable("idactetrait") String idactetrait, @RequestBody ESIMB esimb) {
+		Optional<ESIMB> esimbData = ESIMBRepo.findByCodeIMB(idactetrait);
+
+		if (esimbData.isPresent()) {
+			ESIMB _esimb = esimbData.get();
+			_esimb.setCommentaire(esimb.getCommentaire());
+			_esimb.setDate_livraison(esimb.getDate_livraison());
+			_esimb.setDate_reception(esimb.getDate_reception());
+			_esimb.setDate_reprise(esimb.getDate_reprise());
+			_esimb.setDate_validation(esimb.getDate_validation());
+			_esimb.setDate_verification(esimb.getDate_verification());
+			_esimb.setDuree(esimb.getDuree());
+			_esimb.setMotif(esimb.getMotif());
+			_esimb.setQuantite(esimb.getQuantite());
+			_esimb.setRef_tacheBPU(esimb.getRef_tacheBPU());
+			_esimb.setReprise_facturable(esimb.getReprise_facturable());
+			_esimb.setStatut_facturation(esimb.getStatut_facturation());
+			
+			return new ResponseEntity<>(ESIMBRepo.save(_esimb), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}*/
+	
+	@PutMapping("/esimbs/{idactetrait}")
+	public ResponseEntity<ESIMB> update(@PathVariable(value = "idactetrait") String idactetrait ,
+			@Valid @RequestBody ESIMB esimb) throws ResourceNotFoundException {
+		ESIMB _esimb = ESIMBRepo.findById(idactetrait)
+				.orElseThrow(() -> new ResourceNotFoundException("Esimb not found for this idactetrait :: " + idactetrait));
+
+		_esimb.setCommentaire(esimb.getCommentaire());
+		_esimb.setDateLivraison(esimb.getDateLivraison());
+		_esimb.setDateReception(esimb.getDateReception());
+		_esimb.setDateReprise(esimb.getDateReprise());
+		_esimb.setDateValidation(esimb.getDateValidation());
+		_esimb.setDateVerification(esimb.getDateVerification());
+		_esimb.setDuree(esimb.getDuree());
+		_esimb.setMotif(esimb.getMotif());
+		_esimb.setQuantite(esimb.getQuantite());
+		final ESIMB updatedEsimb = ESIMBRepo.save(esimb);
+		return ResponseEntity.ok(updatedEsimb);
+	}
 	
 	
 
-	@PutMapping("/tickets")
+	/*@PutMapping("/tickets")
 	public ResponseEntity<ESIMB> update (@RequestBody Acte_traitement acte_traitement, @RequestParam String idacte, @RequestParam String date_verification ) {
 		System.out.println("Hi!!");
 		Optional<ESIMB> esimbData = ESIMBRepo.findByIdacte(idacte);
@@ -176,6 +278,12 @@ public class ESIMBController {
 		}
 		
 	}
+	
+	@GetMapping("/esimbs/idActeorcodeImb")
+	public ResponseEntity<List<ESIMB>> getEsimbByIdacteOrCodeIMB(@RequestParam String idacte, 
+				@RequestParam String codeIMB) {
+		return new ResponseEntity<List<ESIMB>>(ESIMBRepo.findByIdacteOrCodeIMB(idacte, codeIMB), HttpStatus.OK);
+	}*/
 }
 
 	

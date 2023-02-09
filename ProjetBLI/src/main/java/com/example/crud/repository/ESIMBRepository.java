@@ -7,13 +7,25 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.crud.entities.ESIMB;
+import com.example.crud.entities.Graphic;
 
 @Repository
 public interface ESIMBRepository extends JpaRepository<ESIMB, String> {
 	Optional<ESIMB> findByCodeIMB(String codeIMB);
 	Optional<ESIMB> findByIdacte(String idacte);
 	
-	List<ESIMB> findBycodeIMBContaining(String codeIMB);
+	Optional<ESIMB> findByidacte(String idacte);
+	Optional<ESIMB> findByidactetrait(String idactetrait);
+	
+	List<ESIMB> findByIdacteOrCodeIMB(String idacte, String codeIMB);
+	
+	
+	List<ESIMB> findByaffectationContaining(String affectation);
+	 List<ESIMB> findBydateLivraison(String dateLivraison);
+		List<ESIMB> findBycodeIMBContaining(String codeIMB);
+		List<ESIMB>findByidacteContaining(String idacte);
+
+
 
 
 

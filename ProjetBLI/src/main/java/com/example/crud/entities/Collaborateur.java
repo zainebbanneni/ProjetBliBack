@@ -18,7 +18,7 @@ public class Collaborateur {
 	private String mdp;
 	private Date date_integration;
 	private String fonction;
-	private String id_equipe;
+	private String idequipe;
 	
 	public String getCUID() {
 		return CUID;
@@ -63,11 +63,11 @@ public class Collaborateur {
 		this.fonction = fonction;
 	}
 	
-	public String getId_equipe() {
-		return id_equipe;
+	public String getIdequipe() {
+		return idequipe;
 	}
-	public void setId_equipe(String id_equipe) {
-		this.id_equipe = id_equipe;
+	public void setId_equipe(String idequipe) {
+		this.idequipe = idequipe;
 	}
 	public Collaborateur() {
 		super();
@@ -85,16 +85,16 @@ public class Collaborateur {
 	}
 	
 	
-	public Collaborateur(String cUID, String nom, String prenom, String id_equipe) {
+	public Collaborateur(String cUID, String nom, String prenom, String idequipe) {
 		super();
 		CUID = cUID;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.id_equipe = id_equipe;
+		this.idequipe = idequipe;
 	}
 
 	public Collaborateur(String cUID, String nom, String prenom, String adresse, String mdp, Date date_integration,
-			String fonction, String id_equipe) {
+			String fonction, String idequipe) {
 		super();
 		CUID = cUID;
 		this.nom = nom;
@@ -103,12 +103,12 @@ public class Collaborateur {
 		this.mdp = mdp;
 		this.date_integration = date_integration;
 		this.fonction = fonction;
-		this.id_equipe = id_equipe;
+		this.idequipe = idequipe;
 	}
 	@Override
 	public String toString() {
 		return "Collaborateur [CUID=" + CUID + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", mdp="
-				+ mdp + ", date_integration=" + date_integration + ", fonction=" + fonction + ", id_equipe=" + id_equipe
+				+ mdp + ", date_integration=" + date_integration + ", fonction=" + fonction + ", idequipe=" + idequipe
 				+ "]";
 	}
 

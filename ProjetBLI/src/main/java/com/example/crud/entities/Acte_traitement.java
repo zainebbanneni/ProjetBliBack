@@ -10,31 +10,35 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Indexed;
 
 @Indexed
 @Entity
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Acte_traitement {
 	@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-	 //@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String idactetrait;
-	private String ref_tacheBPU;
+	private String idacte;
+	private String refTacheBPU;
+	 @Value("ESIMB")
 	private String type_prestation;
+	 @Value("Forfait")
 	private String type_element;
 	private int quantite;
-	private String date_reception;
-	private String date_livraison;
-	private String date_validation;
+	private String dateReception;
+	private String dateLivraison;
+	private String dateValidation;
 	private String affectation;
 	private int duree;
 	private String commentaire;
 	private String motif;
-	private String statut_facturation;
-	private String date_reprise;
-	private String reprise_facturable;
+	private String statutFacturation;
+	private String dateReprise;
+	private String repriseFacturable;
+	
 	
 	public String getIdactetrait() {
 		return idactetrait;
@@ -42,11 +46,17 @@ public class Acte_traitement {
 	public void setIdactetrait(String idactetrait) {
 		this.idactetrait = idactetrait;
 	}
-	public String getRef_tacheBPU() {
-		return ref_tacheBPU;
+	public String getIdacte() {
+		return idacte;
 	}
-	public void setRef_tacheBPU(String ref_tacheBPU) {
-		this.ref_tacheBPU = ref_tacheBPU;
+	public void setIdacte(String idacte) {
+		this.idacte = idacte;
+	}
+	public String getRefTacheBPU() {
+		return refTacheBPU;
+	}
+	public void setRefTacheBPU(String refTacheBPU) {
+		this.refTacheBPU = refTacheBPU;
 	}
 	public String getType_prestation() {
 		return type_prestation;
@@ -66,23 +76,23 @@ public class Acte_traitement {
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
-	public String getDate_reception() {
-		return date_reception;
+	public String getDateReception() {
+		return dateReception;
 	}
-	public void setDate_reception(String date_reception) {
-		this.date_reception = date_reception;
+	public void setDateReception(String dateReception) {
+		this.dateReception = dateReception;
 	}
-	public String getDate_livraison() {
-		return date_livraison;
+	public String getDateLivraison() {
+		return dateLivraison;
 	}
-	public void setDate_livraison(String date_livraison) {
-		this.date_livraison = date_livraison;
+	public void setDateLivraison(String dateLivraison) {
+		this.dateLivraison = dateLivraison;
 	}
-	public String getDate_validation() {
-		return date_validation;
+	public String getDateValidation() {
+		return dateValidation;
 	}
-	public void setDate_validation(String date_validation) {
-		this.date_validation = date_validation;
+	public void setDateValidation(String dateValidation) {
+		this.dateValidation = dateValidation;
 	}
 	public String getAffectation() {
 		return affectation;
@@ -108,84 +118,84 @@ public class Acte_traitement {
 	public void setMotif(String motif) {
 		this.motif = motif;
 	}
-	public String getStatut_facturation() {
-		return statut_facturation;
+	public String getStatutFacturation() {
+		return statutFacturation;
 	}
-	public void setStatut_facturation(String statut_facturation) {
-		this.statut_facturation = statut_facturation;
+	public void setStatutFacturation(String statutFacturation) {
+		this.statutFacturation = statutFacturation;
 	}
-	public String getDate_reprise() {
-		return date_reprise;
+	public String getDateReprise() {
+		return dateReprise;
 	}
-	public void setDate_reprise(String date_reprise) {
-		this.date_reprise = date_reprise;
+	public void setDateReprise(String dateReprise) {
+		this.dateReprise = dateReprise;
 	}
-	public String getReprise_facturable() {
-		return reprise_facturable;
+	public String getRepriseFacturable() {
+		return repriseFacturable;
 	}
-	public void setReprise_facturable(String reprise_facturable) {
-		this.reprise_facturable = reprise_facturable;
+	public void setRepriseFacturable(String repriseFacturable) {
+		this.repriseFacturable = repriseFacturable;
 	}
 	public Acte_traitement() {
 		super();
 	}
-	public Acte_traitement(String id_acte, String ref_tacheBPU, String type_prestation, String type_element, int quantite,
-			String date_reception, String date_livraison, String date_validation, String affectation, int duree,
-			String commentaire, String motif, String statut_facturation, String date_reprise, String reprise_facturable) {
+	public Acte_traitement(String idactetrait, String idacte, String refTacheBPU, String type_prestation,
+			String type_element, int quantite, String dateReception, String dateLivraison, String dateValidation,
+			String affectation, int duree, String commentaire, String motif, String statutFacturation,
+			String dateReprise, String repriseFacturable) {
 		super();
-		this.idactetrait = id_acte;
-		this.ref_tacheBPU = ref_tacheBPU;
+		this.idactetrait = idactetrait;
+		this.idacte = idacte;
+		this.refTacheBPU = refTacheBPU;
 		this.type_prestation = type_prestation;
 		this.type_element = type_element;
 		this.quantite = quantite;
-		this.date_reception = date_reception;
-		this.date_livraison = date_livraison;
-		this.date_validation = date_validation;
+		this.dateReception = dateReception;
+		this.dateLivraison = dateLivraison;
+		this.dateValidation = dateValidation;
 		this.affectation = affectation;
 		this.duree = duree;
 		this.commentaire = commentaire;
 		this.motif = motif;
-		this.statut_facturation = statut_facturation;
-		this.date_reprise = date_reprise;
-		this.reprise_facturable = reprise_facturable;
+		this.statutFacturation = statutFacturation;
+		this.dateReprise = dateReprise;
+		this.repriseFacturable = repriseFacturable;
 	}
-	public Acte_traitement(String id_acte, String type_prestation, String type_element, int quantite, String date_reception,
-			String date_livraison, String date_validation, String affectation, int duree, String commentaire, String motif,
-			String statut_facturation, String date_reprise, String reprise_facturable) {
+	public Acte_traitement(String idacte, String refTacheBPU, String type_prestation, String type_element, int quantite,
+			String dateReception, String dateLivraison, String dateValidation, String affectation, int duree,
+			String commentaire, String motif, String statutFacturation, String dateReprise, String repriseFacturable) {
 		super();
-		this.idactetrait = id_acte;
+		this.idacte = idacte;
+		this.refTacheBPU = refTacheBPU;
 		this.type_prestation = type_prestation;
 		this.type_element = type_element;
 		this.quantite = quantite;
-		this.date_reception = date_reception;
-		this.date_livraison = date_livraison;
-		this.date_validation = date_validation;
+		this.dateReception = dateReception;
+		this.dateLivraison = dateLivraison;
+		this.dateValidation = dateValidation;
 		this.affectation = affectation;
 		this.duree = duree;
 		this.commentaire = commentaire;
 		this.motif = motif;
-		this.statut_facturation = statut_facturation;
-		this.date_reprise = date_reprise;
-		this.reprise_facturable = reprise_facturable;
-	}
-	
-	
-	public Acte_traitement(String id_acte, String ref_tacheBPU, String type_prestation, String type_element) {
-		super();
-		this.idactetrait = id_acte;
-		this.ref_tacheBPU = ref_tacheBPU;
-		this.type_prestation = type_prestation;
-		this.type_element = type_element;
+		this.statutFacturation = statutFacturation;
+		this.dateReprise = dateReprise;
+		this.repriseFacturable = repriseFacturable;
 	}
 	@Override
 	public String toString() {
-		return "Acte_traitement [Id_acte=" + idactetrait + ", Ref_tacheBPU=" + ref_tacheBPU + ", type_prestation="
-				+ type_prestation + ", type_element=" + type_element + ", quantite=" + quantite + ", date_reception="
-				+ date_reception + ", date_livraison=" + date_livraison + ", date_validation=" + date_validation
-				+ ", affectation=" + affectation + ", duree=" + duree + ", commentaire=" + commentaire + ", motif="
-				+ motif + ", statut_facturation=" + statut_facturation + ", date_reprise=" + date_reprise
-				+ ", reprise_facturable=" + reprise_facturable + "]";
+		return "Acte_traitement [idactetrait=" + idactetrait + ", idacte=" + idacte + ", refTacheBPU=" + refTacheBPU
+				+ ", type_prestation=" + type_prestation + ", type_element=" + type_element + ", quantite=" + quantite
+				+ ", dateReception=" + dateReception + ", dateLivraison=" + dateLivraison + ", dateValidation="
+				+ dateValidation + ", affectation=" + affectation + ", duree=" + duree + ", commentaire=" + commentaire
+				+ ", motif=" + motif + ", statutFacturation=" + statutFacturation + ", dateReprise=" + dateReprise
+				+ ", repriseFacturable=" + repriseFacturable + "]";
 	}
+	public Acte_traitement(String idactetrait, String refTacheBPU) {
+		super();
+		this.idactetrait = idactetrait;
+		this.refTacheBPU = refTacheBPU;
+	}
+	
 	
 	
 	
