@@ -2,6 +2,7 @@ package com.example.crud.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.entities.Acte_traitement;
+import com.example.crud.entities.Collaborateur;
 import com.example.crud.entities.ESIMB;
 import com.example.crud.entities.Graphic;
+import com.example.crud.entities.models.Grafic_Resp;
 import com.example.crud.exception.ResourceNotFoundException;
 import com.example.crud.repository.Acte_traitementRepository;
+import com.example.crud.repository.CollaborateurRepository;
 import com.example.crud.repository.ESIMBRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,6 +38,8 @@ public class ESIMBController {
 	ESIMBRepository ESIMBRepo;
 	@Autowired
 	Acte_traitementRepository actetraitementRepository;
+	@Autowired 
+	CollaborateurRepository collaborateurRepository;
 	
 	
 	
@@ -277,13 +283,75 @@ public class ESIMBController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-	}
-	
-	@GetMapping("/esimbs/idActeorcodeImb")
-	public ResponseEntity<List<ESIMB>> getEsimbByIdacteOrCodeIMB(@RequestParam String idacte, 
-				@RequestParam String codeIMB) {
-		return new ResponseEntity<List<ESIMB>>(ESIMBRepo.findByIdacteOrCodeIMB(idacte, codeIMB), HttpStatus.OK);
 	}*/
+	
+//-----------------------------------------
+	//Get Graphic by id Esimb
+		@GetMapping("/getEsimbs")
+		public ResponseEntity<List<ESIMB>> getGraphics(@RequestParam String cuid,@RequestParam String role){
+			try {
+
+			List<ESIMB> response = new ArrayList<ESIMB>();
+			ESIMB _esimb = new ESIMB();
+			List<ESIMB> _allesimbs = ESIMBRepo.findAll();
+			_esimb = new ESIMB	();
+
+			if(role.equals("PILOTE") ){
+				for(int i = 0; i < _allesimbs.size(); i++){
+					Collaborateur _colab = collaborateurRepository.findByCUID(_esimb.getAffectation());
+					Collaborateur _colab_req = collaborateurRepository.findByCUID(cuid);
+					if(Objects.nonNull(_colab) && Objects.nonNull(_colab_req)){
+						System.out.println("_colab.getIdequipe() " + _colab.toString());
+						System.out.println("_colab_req.getIdequipe() " + _colab_req.toString());
+
+						if (_colab.getIdequipe().equals(_colab_req.getIdequipe()) ) {
+							_esimb = new ESIMB(
+							_allesimbs.get(i).getIdacte(),
+							_allesimbs.get(i).getCodeIMB(),
+							_allesimbs.get(i).getDateLivraison(),
+							_allesimbs.get(i).getDateReception(),
+							_allesimbs.get(i).getCommentaire(),
+							_allesimbs.get(i).getAffectation(),
+							_allesimbs.get(i).getDateReprise(),
+							_colab.getNom() + " "+_colab.getPrenom()
+							
+						);
+
+			
+						response.add(_esimb);
+						}
+					}	
+				}
+			}else{
+	            for(int i = 0; i < _allesimbs.size(); i++){
+					Collaborateur _colab = collaborateurRepository.findByCUID(_esimb.getAffectation());
+					if(_colab.getCUID().equals(cuid)){
+						System.out.println("OK");
+						_esimb = new ESIMB(
+						_allesimbs.get(i).getIdacte(),
+						_allesimbs.get(i).getCodeIMB(),
+						_allesimbs.get(i).getDateLivraison(),
+						_allesimbs.get(i).getDateReception(),
+						_allesimbs.get(i).getCommentaire(),
+						_allesimbs.get(i).getAffectation(),
+						_allesimbs.get(i).getDateReprise(),
+						_colab.getNom() + " "+_colab.getPrenom()
+						
+					);
+					response.add(_esimb);
+					}
+					
+				}
+			}
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+			
+			} catch (Exception e) {
+			    System.out.println("erreur "+e);
+				return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+			}
+			
+			
+		}
 }
 
 	

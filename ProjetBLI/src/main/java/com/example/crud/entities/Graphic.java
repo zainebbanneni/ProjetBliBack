@@ -5,8 +5,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Graphic {
-	 @Id
-	 private String idGrafic;
+	    @Id
+	    private String idGrafic;
 	    private String iar;
 	    private String code_imb;
 	    private String groupe_operation;
@@ -14,8 +14,17 @@ public class Graphic {
 	    private String statut_graphic;
 	    private String traitement_effectue;
 	    private String type_traitement;
+		private String id_acte;
 
-	    public String getidGrafic() {
+	    public String getId_acte() {
+			return id_acte;
+		}
+
+		public void setId_acte(String id_acte) {
+			this.id_acte = id_acte;
+		}
+
+		public String getidGrafic() {
 	        return idGrafic;
 	    }
 
@@ -78,7 +87,7 @@ public class Graphic {
 	    }
 
 	    public Graphic(String idGrafic, String iar, String code_imb, String groupe_operation, String dateTraitement,
-	            String statut_graphic, String traitement_effectue, String type_traitement) {
+	            String statut_graphic, String traitement_effectue, String type_traitement,String id_acte) {
 	        this.idGrafic = idGrafic;
 	        this.iar = iar;
 	        this.code_imb = code_imb;
@@ -87,6 +96,7 @@ public class Graphic {
 	        this.statut_graphic = statut_graphic;
 	        this.traitement_effectue = traitement_effectue;
 	        this.type_traitement = type_traitement;
+			this.id_acte = id_acte;
 	    }
 
 	    public Graphic() {

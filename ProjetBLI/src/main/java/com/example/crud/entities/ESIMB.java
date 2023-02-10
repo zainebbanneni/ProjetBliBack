@@ -42,6 +42,14 @@ public class ESIMB extends Acte_traitement{
 	}
 	
 
+	public ESIMB(String idacte, String codeIMB2, String dateLivraison, String dateReception, String commentaire,
+			String affectation, String dateReprise, String idactetrait, String string, int duree, String commentaire2) {
+		// TODO Auto-generated constructor stub
+	}
+	public ESIMB(String idacte, String codeIMB2, String dateLivraison, String dateReception, String commentaire,
+			String affectation, String dateReprise, String string) {
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public String toString() {
 		return "ESIMB [ codeIMB=" + codeIMB + ", date_verification=" + dateVerification + "]";
