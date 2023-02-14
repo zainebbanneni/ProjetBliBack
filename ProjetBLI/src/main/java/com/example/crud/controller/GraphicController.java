@@ -147,11 +147,13 @@ public class GraphicController {
 		if(role.equals("PILOTE") ){
 			for(int i = 0; i < _allgraphics.size(); i++){
 				Optional<Acte_traitement> _acte = actetraitementRepository.findByidactetrait(_allgraphics.get(i).getId_acte());
+				System.out.println(_acte.toString());
 				Collaborateur _colab = collaborateurRepository.findByCUID(_acte.get().getAffectation());
+				System.out.println(_colab.toString());
 				Collaborateur _colab_req = collaborateurRepository.findByCUID(cuid);
 				if(Objects.nonNull(_colab) && Objects.nonNull(_colab_req)){
-					System.out.println("_colab.getIdequipe() " + _colab.toString());
-					System.out.println("_colab_req.getIdequipe() " + _colab_req.toString());
+					//System.out.println("_colab.getIdequipe() " + _colab.toString());
+					//System.out.println("_colab_req.getIdequipe() " + _colab_req.toString());
 
 					if (_colab.getIdequipe().equals(_colab_req.getIdequipe()) ) {
 						System.out.println("rrr");

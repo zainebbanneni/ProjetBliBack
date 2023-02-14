@@ -16,6 +16,7 @@ public class Grafic_Resp {
     private String affectation;
 	private int duree;
 	private String commentaire;
+	
 
     public Grafic_Resp() {
     }
@@ -37,7 +38,13 @@ public class Grafic_Resp {
         this.commentaire = commentaire;
     }
 
-    public String getIdGrafic() {
+    public Grafic_Resp(String affectation2, String commentaire2, String dateLivraison, String dateReception,
+			String dateValidation, int duree2, int quantite, String repriseFacturable, String id_acte, String string,
+			String codeIMB, String dateVerification) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getIdGrafic() {
         return idGrafic;
     }
 

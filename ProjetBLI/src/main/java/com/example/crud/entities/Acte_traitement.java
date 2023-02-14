@@ -23,9 +23,7 @@ public class Acte_traitement {
 	private String idactetrait;
 	private String idacte;
 	private String refTacheBPU;
-	 @Value("ESIMB")
 	private String type_prestation;
-	 @Value("Forfait")
 	private String type_element;
 	private int quantite;
 	private String dateReception;
