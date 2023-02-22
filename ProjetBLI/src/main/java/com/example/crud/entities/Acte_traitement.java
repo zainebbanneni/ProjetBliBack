@@ -20,7 +20,6 @@ public class Acte_traitement {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String idactetrait;
 	private String idacte;
 	private String refTacheBPU;
 	private String type_prestation;
@@ -38,12 +37,6 @@ public class Acte_traitement {
 	private String repriseFacturable;
 	
 	
-	public String getIdactetrait() {
-		return idactetrait;
-	}
-	public void setIdactetrait(String idactetrait) {
-		this.idactetrait = idactetrait;
-	}
 	public String getIdacte() {
 		return idacte;
 	}
@@ -137,28 +130,7 @@ public class Acte_traitement {
 	public Acte_traitement() {
 		super();
 	}
-	public Acte_traitement(String idactetrait, String idacte, String refTacheBPU, String type_prestation,
-			String type_element, int quantite, String dateReception, String dateLivraison, String dateValidation,
-			String affectation, int duree, String commentaire, String motif, String statutFacturation,
-			String dateReprise, String repriseFacturable) {
-		super();
-		this.idactetrait = idactetrait;
-		this.idacte = idacte;
-		this.refTacheBPU = refTacheBPU;
-		this.type_prestation = type_prestation;
-		this.type_element = type_element;
-		this.quantite = quantite;
-		this.dateReception = dateReception;
-		this.dateLivraison = dateLivraison;
-		this.dateValidation = dateValidation;
-		this.affectation = affectation;
-		this.duree = duree;
-		this.commentaire = commentaire;
-		this.motif = motif;
-		this.statutFacturation = statutFacturation;
-		this.dateReprise = dateReprise;
-		this.repriseFacturable = repriseFacturable;
-	}
+	
 	public Acte_traitement(String idacte, String refTacheBPU, String type_prestation, String type_element, int quantite,
 			String dateReception, String dateLivraison, String dateValidation, String affectation, int duree,
 			String commentaire, String motif, String statutFacturation, String dateReprise, String repriseFacturable) {
@@ -179,18 +151,40 @@ public class Acte_traitement {
 		this.dateReprise = dateReprise;
 		this.repriseFacturable = repriseFacturable;
 	}
+	public Acte_traitement( String refTacheBPU, String type_prestation,
+			String type_element, int quantite, String dateReception, String dateLivraison, String dateValidation,
+			String affectation, int duree, String commentaire, String motif, String statutFacturation,
+			String dateReprise, String repriseFacturable) {
+		super();
+		this.refTacheBPU = refTacheBPU;
+		this.type_prestation = type_prestation;
+		this.type_element = type_element;
+		this.quantite = quantite;
+		this.dateReception = dateReception;
+		this.dateLivraison = dateLivraison;
+		this.dateValidation = dateValidation;
+		this.affectation = affectation;
+		this.duree = duree;
+		this.commentaire = commentaire;
+		this.motif = motif;
+		this.statutFacturation = statutFacturation;
+		this.dateReprise = dateReprise;
+		this.repriseFacturable = repriseFacturable;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "Acte_traitement [idactetrait=" + idactetrait + ", idacte=" + idacte + ", refTacheBPU=" + refTacheBPU
-				+ ", type_prestation=" + type_prestation + ", type_element=" + type_element + ", quantite=" + quantite
-				+ ", dateReception=" + dateReception + ", dateLivraison=" + dateLivraison + ", dateValidation="
-				+ dateValidation + ", affectation=" + affectation + ", duree=" + duree + ", commentaire=" + commentaire
-				+ ", motif=" + motif + ", statutFacturation=" + statutFacturation + ", dateReprise=" + dateReprise
+		return "Acte_traitement [idacte=" + idacte + ", refTacheBPU=" + refTacheBPU + ", type_prestation="
+				+ type_prestation + ", type_element=" + type_element + ", quantite=" + quantite + ", dateReception="
+				+ dateReception + ", dateLivraison=" + dateLivraison + ", dateValidation=" + dateValidation
+				+ ", affectation=" + affectation + ", duree=" + duree + ", commentaire=" + commentaire + ", motif="
+				+ motif + ", statutFacturation=" + statutFacturation + ", dateReprise=" + dateReprise
 				+ ", repriseFacturable=" + repriseFacturable + "]";
 	}
-	public Acte_traitement(String idactetrait, String refTacheBPU) {
+	public Acte_traitement(String idacte, String refTacheBPU) {
 		super();
-		this.idactetrait = idactetrait;
+		this.idacte = idacte;
 		this.refTacheBPU = refTacheBPU;
 	}
 	

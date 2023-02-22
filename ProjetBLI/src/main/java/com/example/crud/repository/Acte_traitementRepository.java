@@ -10,7 +10,7 @@ import com.example.crud.entities.Acte_traitement;
 
 @Repository
 public interface Acte_traitementRepository extends JpaRepository<Acte_traitement, String> {
-	Optional<Acte_traitement> findByidactetrait(String idactetrait);
+	Optional<Acte_traitement> findByidacte(String idacte);
 	
 
 

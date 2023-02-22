@@ -12,7 +12,7 @@ public class Grafic_Resp {
 	    private String type_traitement;
 
     //Acte de traitement
-    private String idactetrait;
+    private String idacte;
     private String affectation;
 	private int duree;
 	private String commentaire;
@@ -23,7 +23,7 @@ public class Grafic_Resp {
 
     public Grafic_Resp(String idGrafic, String iar, String code_imb, String groupe_operation, String dateTraitement,
             String statut_graphic, String traitement_effectue, String type_traitement, 
-            String idactetrait, String affectation, int duree, String commentaire) {
+            String idacte, String affectation, int duree, String commentaire) {
         this.idGrafic = idGrafic;
         this.iar = iar;
         this.code_imb = code_imb;
@@ -32,7 +32,7 @@ public class Grafic_Resp {
         this.statut_graphic = statut_graphic;
         this.traitement_effectue = traitement_effectue;
         this.type_traitement = type_traitement;
-        this.idactetrait = idactetrait;
+        this.idacte = idacte;
         this.affectation = affectation;
         this.duree = duree;
         this.commentaire = commentaire;
@@ -108,12 +108,12 @@ public class Grafic_Resp {
         this.type_traitement = type_traitement;
     }
 
-    public String getIdactetrait() {
-        return idactetrait;
+    public String getIdacte() {
+        return idacte;
     }
 
-    public void setIdactetrait(String idactetrait) {
-        this.idactetrait = idactetrait;
+    public void setIdacte(String idacte) {
+        this.idacte = idacte;
     }
 
     public String getAffectation() {

@@ -11,19 +11,20 @@ import com.example.crud.entities.Graphic;
 
 @Repository
 public interface ESIMBRepository extends JpaRepository<ESIMB, String> {
-	Optional<ESIMB> findByCodeIMB(String codeIMB);
-	Optional<ESIMB> findByIdacte(String idacte);
+	//Optional<ESIMB> findByCodeIMB(String codeIMB);
+	List<ESIMB> findByCodeIMB(String codeIMB);
+	//Optional<ESIMB> findByIdacte(String idacte);
 	
+	//Optional<ESIMB> findByidacte(String idacte);
 	Optional<ESIMB> findByidacte(String idacte);
-	Optional<ESIMB> findByidactetrait(String idactetrait);
 	
-	List<ESIMB> findByIdacteOrCodeIMB(String idacte, String codeIMB);
-	
-	
+
 	List<ESIMB> findByaffectationContaining(String affectation);
 	 List<ESIMB> findBydateLivraison(String dateLivraison);
 		List<ESIMB> findBycodeIMBContaining(String codeIMB);
-		List<ESIMB>findByidacteContaining(String idacte);
+		List<ESIMB>findBycodeBanbouContaining(String codeBanbou);
+		 List<ESIMB> findByAffectation(String affectation);  
+
 
 
 
