@@ -1,6 +1,5 @@
 package com.example.crud.entities;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,60 +10,116 @@ import javax.persistence.Id;
 public class BPU {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String Ref_tacheBPU;
-	private String Unite;
-	private int PU;
-	private Date date_validite;
-	private Date date_expiration;
-	private int penalité;
-	public String getRef_tacheBPU() {
-		return Ref_tacheBPU;
+	private long id;
+	private String refTacheBPU; //version+type_prest+tarification
+	private String type_element;
+	private float PU;
+	private String dateValidite;
+	private String dateExpiration;
+	private String type_penalite;//variable ou fixe
+	private float penalite;// pourc ou prix
+	private String type_prestation;
+	
+	public long getId() {
+		return id;
 	}
-	public void setRef_tacheBPU(String ref_tacheBPU) {
-		Ref_tacheBPU = ref_tacheBPU;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getUnite() {
-		return Unite;
+	public String getRefTacheBPU() {
+		return refTacheBPU;
 	}
-	public void setUnite(String unite) {
-		Unite = unite;
+	public void setRefTacheBPU(String refTacheBPU) {
+		this.refTacheBPU = refTacheBPU;
 	}
-	public int getPU() {
+	public String getType_element() {
+		return type_element;
+	}
+	public void setType_element(String type_element) {
+		this.type_element = type_element;
+	}
+	public float getPU() {
 		return PU;
 	}
-	public void setPU(int pU) {
+	public void setPU(float pU) {
 		PU = pU;
 	}
-	public Date getDate_validite() {
-		return date_validite;
+	public String getDateValidite() {
+		return dateValidite;
 	}
-	public void setDate_validite(Date date_validite) {
-		this.date_validite = date_validite;
+	public void setDateValidite(String dateValidite) {
+		this.dateValidite = dateValidite;
 	}
-	public Date getDate_expiration() {
-		return date_expiration;
+	public String getDateExpiration() {
+		return dateExpiration;
 	}
-	public void setDate_expiration(Date date_expiration) {
-		this.date_expiration = date_expiration;
+	public void setDateExpiration(String dateExpiration) {
+		this.dateExpiration = dateExpiration;
 	}
-	public int getPenalité() {
-		return penalité;
+	public String getType_penalite() {
+		return type_penalite;
 	}
-	public void setPenalité(int penalité) {
-		this.penalité = penalité;
+	public void setType_penalite(String type_penalite) {
+		this.type_penalite = type_penalite;
+	}
+	public float getPenalite() {
+		return penalite;
+	}
+	public void setPenalite(float penalite) {
+		this.penalite = penalite;
+	}
+	public String getType_prestation() {
+		return type_prestation;
+	}
+	public void setType_prestation(String type_prestation) {
+		this.type_prestation = type_prestation;
 	}
 	public BPU() {
 		super();
 	}
-	public BPU(String ref_tacheBPU, String unite, int pU, Date date_validite, Date date_expiration, int penalité) {
+	
+	
+	public BPU(long id, String refTacheBPU, String type_element, float pU, String dateValidite, String dateExpiration,
+			String type_penalite, float penalite, String type_prestation) {
 		super();
-		Ref_tacheBPU = ref_tacheBPU;
-		Unite = unite;
+		this.id = id;
+		this.refTacheBPU = refTacheBPU;
+		this.type_element = type_element;
 		PU = pU;
-		this.date_validite = date_validite;
-		this.date_expiration = date_expiration;
-		this.penalité = penalité;
+		this.dateValidite = dateValidite;
+		this.dateExpiration = dateExpiration;
+		this.type_penalite = type_penalite;
+		this.penalite = penalite;
+		this.type_prestation = type_prestation;
 	}
+	
+	public BPU(String refTacheBPU, String type_element, float pU, String dateValidite, String dateExpiration,
+			String type_penalite, float penalite, String type_prestation) {
+		super();
+		this.refTacheBPU = refTacheBPU;
+		this.type_element = type_element;
+		PU = pU;
+		this.dateValidite = dateValidite;
+		this.dateExpiration = dateExpiration;
+		this.type_penalite = type_penalite;
+		this.penalite = penalite;
+		this.type_prestation = type_prestation;
+	}
+	@Override
+	public String toString() {
+		return "BPU [id=" + id + ", refTacheBPU=" + refTacheBPU + ", type_element=" + type_element + ", PU=" + PU
+				+ ", dateValidite=" + dateValidite + ", dateExpiration=" + dateExpiration + ", type_penalite="
+				+ type_penalite + ", penalite=" + penalite + ", type_prestation=" + type_prestation + "]";
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

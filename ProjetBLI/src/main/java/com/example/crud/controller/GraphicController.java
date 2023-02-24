@@ -746,7 +746,7 @@ public class GraphicController {
 	//Update graphic
 	@PutMapping("/Update")
 	public String update(@RequestBody Graphic grafic){
-		System.out.println("grafic.getIdactetrait()  : "+grafic.getIdacte());
+		System.out.println("grafic.getIdacte()  : "+grafic.getIdacte());
 		//get the graphic to update
 		Graphic graphicData = graphic_Repository.findByidacte(grafic.getIdacte());
 

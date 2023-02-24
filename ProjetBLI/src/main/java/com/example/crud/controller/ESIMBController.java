@@ -102,8 +102,8 @@ public class ESIMBController {
 			return ESIMBRepo.findAll();
 		}
 		
-		//Get Esimb by id acte
-		@GetMapping("/getEsimbById/{codeBanbouString}")
+		//Get Esimb by code Banbou
+		@GetMapping("/getEsimbBycodeBanbou/{codeBanbouString}")
 		public List<ESIMB> getEsimbByCodeBanbou(@PathVariable String codeBanbouString){
 			return ESIMBRepo.findBycodeBanbouContaining(codeBanbouString);
 		}
@@ -121,14 +121,41 @@ public class ESIMBController {
 		}
 		
 		//Get Esimb by CodeIMB
-		@GetMapping("/getEsimbBycodeIMB/{codeIMB}")
+		@GetMapping("/getEsimbBycodeIMB/{codeIMBString}")
 		public List<ESIMB> getEsimbBycodeIMB(@PathVariable String codeIMBString){
 			return ESIMBRepo.findBycodeIMBContaining(codeIMBString);
 		}
-				
+		
 		//Update esimb
-		@PutMapping("/Update")
-		public ResponseEntity<ESIMB> update( @RequestParam("idacte") String idacte, @RequestBody ESIMB esimb){
+		@PutMapping("/esimbs/{idacte}")
+		public ResponseEntity<ESIMB> updateTutorial(@PathVariable("idacte") String idacte, @RequestBody ESIMB esimb) {
+			Optional<ESIMB> esimbData = ESIMBRepo.findById(idacte);
+
+			if (esimbData.isPresent()) {
+				ESIMB _esimb = esimbData.get();
+				_esimb.setCommentaire(esimb.getCommentaire());
+				_esimb.setCodeIMB(esimb.getCodeIMB());
+				_esimb.setDateLivraison(esimb.getDateLivraison());
+				_esimb.setDateReception(esimb.getDateReception());
+				_esimb.setDateReprise(esimb.getDateReprise());
+				_esimb.setDateValidation(esimb.getDateValidation());
+				_esimb.setDateVerification(esimb.getDateVerification());
+				_esimb.setCodeBanbou(esimb.getCodeBanbou());
+				_esimb.setDuree(esimb.getDuree());
+				_esimb.setMotif(esimb.getMotif());
+				_esimb.setCommentaire(esimb.getCommentaire());
+				_esimb.setQuantite(esimb.getQuantite());
+				_esimb.setRefTacheBPU(esimb.getRefTacheBPU());
+				_esimb.setRepriseFacturable(esimb.getRepriseFacturable());
+				_esimb.setStatutFacturation(esimb.getStatutFacturation());
+						return new ResponseEntity<>(ESIMBRepo.save(_esimb), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+				
+		/*@PutMapping("/Update/{idacte}")
+		public ResponseEntity<ESIMB> update( @PathVariable String idacte, @RequestBody ESIMB esimb){
 					
 		//get esimb to update
 		Optional<ESIMB> esimbData = ESIMBRepo.findByidacte(idacte);
@@ -156,7 +183,9 @@ public class ESIMBController {
 					} else {
 						return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 					}
-				}
+				}*/
+		
+		
 		
 		
 		/*@PostMapping("/add")
@@ -374,18 +403,18 @@ public class ESIMBController {
 	
 //-----------------------------------------
 				//Get Esimbs 
-				@GetMapping("/getGraphics")
-				public ResponseEntity<List<Esimb_Resp>> getGraphics(@RequestParam String cuid,@RequestParam String role){
+				@GetMapping("/getEsimbs")
+				public ResponseEntity<List<Esimb_Resp>> getEsimbs(@RequestParam String cuid,@RequestParam String role){
 					try {
 
 					List<Esimb_Resp> response = new ArrayList<Esimb_Resp>();
-					Esimb_Resp _graphic = new Esimb_Resp();
-					List<ESIMB> _allgraphics = ESIMBRepo.findAll();
-					_graphic = new Esimb_Resp();
+					Esimb_Resp _esimb = new Esimb_Resp();
+					List<ESIMB> _allesimbs = ESIMBRepo.findAll();
+					_esimb = new Esimb_Resp();
 
 					if(role.equals("PILOTE") ){
-						for(int i = 0; i < _allgraphics.size(); i++){
-							Optional<Acte_traitement> _acte = actetraitementRepository.findByidacte(_allgraphics.get(i).getIdacte());
+						for(int i = 0; i < _allesimbs.size(); i++){
+							Optional<Acte_traitement> _acte = actetraitementRepository.findByidacte(_allesimbs.get(i).getIdacte());
 							System.out.println(_acte.toString());
 							Collaborateur _colab = collaborateurRepository.findByCUID(_acte.get().getAffectation());
 							Collaborateur _colab_req = collaborateurRepository.findByCUID(cuid);
@@ -395,10 +424,10 @@ public class ESIMBController {
 
 								if (_colab.getIdequipe().equals(_colab_req.getIdequipe()) ) {
 									System.out.println("rrr");
-									_graphic = new Esimb_Resp(
-								    _allgraphics.get(i).getCodeBanbou(),
-								    _allgraphics.get(i).getCodeIMB(),
-									_allgraphics.get(i).getDateVerification(),
+									_esimb = new Esimb_Resp(
+								    _allesimbs.get(i).getCodeBanbou(),
+								    _allesimbs.get(i).getCodeIMB(),
+									_allesimbs.get(i).getDateVerification(),
 									_acte.get().getIdacte(),
 									_colab.getNom() + " "+_colab.getPrenom(),
 									_acte.get().getDuree(),
@@ -409,20 +438,20 @@ public class ESIMBController {
 
 									
 								);
-								response.add(_graphic);
+								response.add(_esimb);
 								}
 							}	
 						}
 					}else{
-			            for(int i = 0; i < _allgraphics.size(); i++){
-							Optional<Acte_traitement> _acte = actetraitementRepository.findByidacte(_allgraphics.get(i).getIdacte());
+			            for(int i = 0; i < _allesimbs.size(); i++){
+							Optional<Acte_traitement> _acte = actetraitementRepository.findByidacte(_allesimbs.get(i).getIdacte());
 							Collaborateur _colab = collaborateurRepository.findByCUID(_acte.get().getAffectation());
 							if(_colab.getCUID().equals(cuid)){
 								System.out.println("OK");
-								_graphic = new Esimb_Resp(
-									    _allgraphics.get(i).getCodeBanbou(),
-										_allgraphics.get(i).getCodeIMB(),
-										_allgraphics.get(i).getDateVerification(),
+								_esimb = new Esimb_Resp(
+									    _allesimbs.get(i).getCodeBanbou(),
+										_allesimbs.get(i).getCodeIMB(),
+										_allesimbs.get(i).getDateVerification(),
 								_acte.get().getIdacte(),
 								_colab.getNom() + " "+_colab.getPrenom(),
 								_acte.get().getDuree(),
@@ -432,7 +461,7 @@ public class ESIMBController {
 								_acte.get().getMotif()
 
 							);
-							response.add(_graphic);
+							response.add(_esimb);
 							}
 							
 						}
@@ -447,9 +476,9 @@ public class ESIMBController {
 					
 				}
 				
-//------------------------ Get Active Esimbs by Affectation ---------------------------------------- 
-	@GetMapping("/getActiveByAffectation")
-		public ResponseEntity<List<Esimb_Resp>> getEsimbsActivebyDateAffectation(@RequestParam String cuid,@RequestParam String affectation){
+//------------------------ Get Esimbs by Affectation ---------------------------------------- 
+	@GetMapping("/getByAffectation")
+		public ResponseEntity<List<Esimb_Resp>> getEsimbsbyAffectation(@RequestParam String cuid,@RequestParam String affectation){
 			try {
 				boolean isPilote = false;
 										
@@ -517,78 +546,9 @@ public class ESIMBController {
 										
 										
 									}
-
-				//------------------------ Get Non Active Esimbs by Affectation ---------------------------------------- 
-@GetMapping("/getNonActiveByAffectation")
-				public ResponseEntity<List<Esimb_Resp>> getEsimbsNonActivebyDateAffectation(@RequestParam String cuid,@RequestParam String affectation){
-				try {
-					boolean isPilote = false;
-										
-					//response global 
-					List<Esimb_Resp> response = new ArrayList<Esimb_Resp>();
-					Esimb_Resp _esimb = new Esimb_Resp();
-										
-					//get All esimbs containing id acte
-					List<ESIMB> _allesimbs = ESIMBRepo.findByAffectation(affectation);
-					_esimb = new Esimb_Resp();
-										
-					//get Collab infos
-					Collaborateur _colab_req = collaborateurRepository.findByCUID(cuid);
-					//check if PILOTE
-					if(_colab_req.getFonction().equals("3")) {
-							isPilote = true;
-							}
-										
-					if(isPilote){
-						for(int i = 0; i < _allesimbs.size(); i++){
-							if(!(_allesimbs.get(i).isActive())) {
-							Collaborateur _colab = collaborateurRepository.findByCUID(_allesimbs.get(i).getAffectation());
-							if(Objects.nonNull(_colab) && Objects.nonNull(_colab_req)){
-							if (_colab.getIdequipe().equals(_colab_req.getIdequipe()) ) {
-								_esimb = new Esimb_Resp(
-										_allesimbs.get(i).getCodeBanbou(),	
-										_allesimbs.get(i).getCodeIMB(),
-										_allesimbs.get(i).getDateVerification(),
-										_colab.getNom() + " "+_colab.getPrenom(),
-										_allesimbs.get(i).getIdacte(),
-										_allesimbs.get(i).getDuree(),
-										_allesimbs.get(i).getCommentaire());
-										
-								response.add(_esimb);
-													}
-												}	
-											}
-											}
-							}else{
-							   for(int i = 0; i < _allesimbs.size(); i++){
-								  if(!(_allesimbs.get(i).isActive())) {
-								Collaborateur _colab = collaborateurRepository.findByCUID(_allesimbs.get(i).getAffectation());
-									if(_colab.getCUID().equals(cuid)){
-									//System.out.println("OK");
-									_esimb = new Esimb_Resp(
-									_allesimbs.get(i).getCodeBanbou(),	
-									_allesimbs.get(i).getCodeIMB(),
-									_allesimbs.get(i).getDateVerification(),
-								    _colab.getNom() + " "+_colab.getPrenom(),
-									_allesimbs.get(i).getIdacte(),
-									_allesimbs.get(i).getDuree(),
-									_allesimbs.get(i).getCommentaire());
-										response.add(_esimb);
-												}
-												
-											}
-								            }
-										}
-								    return new ResponseEntity<>(response, HttpStatus.OK);
-										
-										} catch (Exception e) {
-										    System.out.println("erreur "+e);
-											return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-										}
-										
-										
-									}				
-				
+	
+	
+	
 				
 				
 		
