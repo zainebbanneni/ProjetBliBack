@@ -121,7 +121,7 @@ public class ESIMBController {
 		}
 		
 		//Get Esimb by CodeIMB
-		@GetMapping("/getEsimbBycodeIMB/{codeIMBString}")
+		@GetMapping("/getEsimbBycodeIMB/IMB/{codeIMBString}")
 		public List<ESIMB> getEsimbBycodeIMB(@PathVariable String codeIMBString){
 			return ESIMBRepo.findBycodeIMBContaining(codeIMBString);
 		}
